@@ -23,6 +23,19 @@ Begin by pulling in the package through Composer.
 $ composer require oanhnn/laravel-handlers
 ```
 
+After that, publish vendor's resources:
+
+```bash
+$ php artisan vendor:publish --provider="Laravel\\Handlers\\HandlersServiceProvider" --tag=config
+$ php artisan vendor:publish --provider="Laravel\\Handlers\\HandlersServiceProvider" --tag=routes
+```
+
+If you want customize stub file, please run:
+
+```bash
+$ php artisan vendor:publish --provider="Laravel\\Handlers\\HandlersServiceProvider" --tag=stubs
+```
+
 ## Usage
 
 
