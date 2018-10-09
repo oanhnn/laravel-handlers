@@ -19,7 +19,7 @@ class MakeHandler extends GeneratorCommand
      *
      * @var string
      */
-    protected $name = 'make:handler';
+    protected $signature = 'make:handler {name} {--force}';
 
     /**
      * The console command description.
@@ -35,7 +35,12 @@ class MakeHandler extends GeneratorCommand
      */
     protected function getStub()
     {
-        return dirname(__DIR__) . '/stubs/handler.stub';
+        $customStub = resource_path('stubs/handler.stub');
+        if ($this->files->exists($customStub)) {
+            return $customStub;
+        }
+
+        return dirname(dirname(__DIR__)) . '/stubs/handler.stub';
     }
 
     /**
@@ -46,7 +51,7 @@ class MakeHandler extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return Config::get('handlers.namespace', $rootNamespace . '\\Http\\Handlers');
+        return trim(Config::get('handlers.namespace', $rootNamespace . '\\Http\\Handlers'), '\\');
     }
 
     /**
