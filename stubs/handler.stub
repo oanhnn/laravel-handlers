@@ -8,13 +8,21 @@ use DummyBaseHandlerNamespace as Handler;
 class DummyClass extends Handler
 {
     /**
+     * DummyClass constructor.
+     */
+    public function __construct()
+    {
+        // Injects dependencies, set middleware, ...
+    }
+
+    /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function __invoke(Request $request)
     {
-        //
+        // Handler's process
     }
 }
