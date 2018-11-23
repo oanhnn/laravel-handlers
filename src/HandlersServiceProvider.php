@@ -20,12 +20,6 @@ class HandlersServiceProvider extends ServiceProvider
         $this->commands([
             Commands\MakeHandler::class,
         ]);
-
-        // register routes
-        $routes = base_path('routes/handlers.php');
-        if (!$this->app->routesAreCached() && file_exists($routes)) {
-            require_once $routes;
-        }
     }
 
     /**
