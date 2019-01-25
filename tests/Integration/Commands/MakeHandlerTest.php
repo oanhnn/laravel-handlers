@@ -1,10 +1,18 @@
 <?php
 
-namespace Laravel\Handlers\Tests;
+namespace Laravel\Handlers\Tests\Integration\Commands;
 
+use Laravel\Handlers\Tests\TestCase;
 use RuntimeException;
 
-class MakeHandlerCommandTest extends TestCase
+/**
+ * Class MakeHandlerTest
+ *
+ * @package     Laravel\Handlers\Tests\Integration\Commands
+ * @author      Oanh Nguyen <oanhnn.bk@gmail.com>
+ * @license     The MIT License
+ */
+class MakeHandlerTest extends TestCase
 {
     /**
      * Test with name is specified, handler class will be generated successful
@@ -74,6 +82,28 @@ class MakeHandlerCommandTest extends TestCase
 
         $this->assertEquals($initialHandlerContent, file_get_contents($filePath));
         // TODO: assert output
+    }
+
+    /**
+     * Test create handler class with custom stub file
+     */
+    public function testUsingCustomStubFile()
+    {
+        $stubPath = resource_path('stubs/handler.stub');
+        $stubContent = str_random(16);
+
+        $this->forceFilePutContents($stubPath, $stubContent);
+
+        $filePath = $this->app->path('Http/Handlers/ShowProfile.php');
+
+        $this->assertFileNotExists($filePath);
+
+        $this->artisan('make:handler', [
+            'name' => 'ShowProfile',
+        ]);
+
+        $this->assertFileExists($filePath);
+        $this->assertEquals($stubContent, file_get_contents($filePath));
     }
 
     /**

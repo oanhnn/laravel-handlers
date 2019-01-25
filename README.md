@@ -1,9 +1,13 @@
-# Introduction
+# Laravel Handlers
 
-[![Build Status](https://travis-ci.org/oanhnn/laravel-handlers.svg?branch=master)](https://travis-ci.org/oanhnn/laravel-handlers)
-[![Coverage Status](https://coveralls.io/repos/github/oanhnn/laravel-handlers/badge.svg?branch=master)](https://coveralls.io/github/oanhnn/laravel-handlers?branch=master)
+[![Latest Version](https://img.shields.io/packagist/v/oanhnn/laravel-handlers.svg)](https://packagist.org/packages/oanhnn/laravel-handlers)
+[![Software License](https://img.shields.io/github/license/oanhnn/laravel-handlers.svg)](LICENSE.md)
+[![Build Status](https://img.shields.io/travis/oanhnn/laravel-handlers/master.svg)](https://travis-ci.org/oanhnn/laravel-handlers)
+[![Coverage Status](https://img.shields.io/coveralls/github/oanhnn/laravel-handlers/master.svg)](https://coveralls.io/github/oanhnn/laravel-handlers?branch=master)
+[![Total Downloads](https://img.shields.io/packagist/dt/oanhnn/laravel-handlers.svg)](https://packagist.org/packages/oanhnn/laravel-handlers)
+[![Requires PHP](https://img.shields.io/travis/php-v/oanhnn/laravel-handlers.svg)](https://travis-ci.org/oanhnn/laravel-handlers)
 
-Easy fake model ID on URL Laravel 5.5+ Application
+Using handler class instead of controller class in Laravel 5.5+
 
 ## Requirements
 
@@ -23,17 +27,34 @@ Begin by pulling in the package through Composer.
 $ composer require oanhnn/laravel-handlers
 ```
 
+### Laravel
+
 After that, publish vendor's resources:
 
 ```bash
-$ php artisan vendor:publish --provider="Laravel\\Handlers\\HandlersServiceProvider" --tag=config
-$ php artisan vendor:publish --provider="Laravel\\Handlers\\HandlersServiceProvider" --tag=routes
+$ php artisan vendor:publish --provider="Laravel\\Handlers\\ServiceProvider" --tag=config
 ```
 
 If you want customize stub file, please run:
 
 ```bash
-$ php artisan vendor:publish --provider="Laravel\\Handlers\\HandlersServiceProvider" --tag=stubs
+$ php artisan vendor:publish --provider="Laravel\\Handlers\\ServiceProvider" --tag=stubs
+```
+
+### Lumen
+
+After that, copy the config file from the vendor directory:
+
+```bash
+$ cp vendor/oanhnn/laravel-handlers/config/handlers.php config/handlers.php
+```
+
+Register the config file and the service provider in `bootstrap/app.php`:
+
+```php
+$app->configure('handlers');
+
+$app->register(Laravel\Handlers\ServiceProvider::class);
 ```
 
 ## Usage

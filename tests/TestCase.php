@@ -3,9 +3,16 @@
 namespace Laravel\Handlers\Tests;
 
 use Illuminate\Filesystem\Filesystem;
-use Laravel\Handlers\HandlersServiceProvider;
+use Laravel\Handlers\ServiceProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
+/**
+ * Class TestCase
+ *
+ * @package     Laravel\Handlers\Tests
+ * @author      Oanh Nguyen <oanhnn.bk@gmail.com>
+ * @license     The MIT License
+ */
 abstract class TestCase extends BaseTestCase
 {
     /**
@@ -17,7 +24,6 @@ abstract class TestCase extends BaseTestCase
      * Define environment setup.
      *
      * @param  \Illuminate\Foundation\Application $app
-     *
      * @return void
      */
     protected function getEnvironmentSetUp($app)
@@ -26,11 +32,17 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
-     * clean up after test
+     * {@inheritdoc}
      */
-    protected function tearDown()
+    public function tearDown()
     {
+        $this->files->delete([
+            base_path('config/handlers.php'),
+            resource_path('stubs/handler.stub'),
+        ]);
+
         $this->files->cleanDirectory($this->app->path());
+
         parent::tearDown();
     }
 
@@ -43,7 +55,7 @@ abstract class TestCase extends BaseTestCase
     protected function getPackageProviders($app)
     {
         return [
-            HandlersServiceProvider::class,
+            ServiceProvider::class,
         ];
     }
 }

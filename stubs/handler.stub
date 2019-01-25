@@ -5,6 +5,11 @@ namespace DummyNamespace;
 use Illuminate\Http\Request;
 use DummyBaseHandlerNamespace as Handler;
 
+/**
+ * Class DummyClass
+ *
+ * @package     DummyNamespace
+ */
 class DummyClass extends Handler
 {
     /**

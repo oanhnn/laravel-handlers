@@ -5,6 +5,13 @@ namespace Laravel\Handlers\Commands;
 use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Facades\Config;
 
+/**
+ * Class MakeHandler
+ *
+ * @package     Laravel\Handlers\Commands
+ * @author      Oanh Nguyen <oanhnn.bk@gmail.com>
+ * @license     The MIT License
+ */
 class MakeHandler extends GeneratorCommand
 {
     /**

@@ -8,6 +8,13 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller;
 
+/**
+ * Class Handler
+ *
+ * @package     Laravel\Handlers
+ * @author      Oanh Nguyen <oanhnn.bk@gmail.com>
+ * @license     The MIT License
+ */
 abstract class Handler extends Controller
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;

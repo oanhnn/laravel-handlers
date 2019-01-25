@@ -2,9 +2,16 @@
 
 namespace Laravel\Handlers;
 
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 
-class HandlersServiceProvider extends ServiceProvider
+/**
+ * Class ServiceProvider
+ *
+ * @package     Laravel\Handlers
+ * @author      Oanh Nguyen <oanhnn.bk@gmail.com>
+ * @license     The MIT License
+ */
+class ServiceProvider extends IlluminateServiceProvider
 {
     /**
      * Register the service provider.
@@ -17,9 +24,11 @@ class HandlersServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(dirname(__DIR__) . '/config/handlers.php', 'handlers');
 
         // register commands
-        $this->commands([
-            Commands\MakeHandler::class,
-        ]);
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                Commands\MakeHandler::class,
+            ]);
+        }
     }
 
     /**
@@ -33,8 +42,7 @@ class HandlersServiceProvider extends ServiceProvider
 
         // publish vendor resources
         if ($this->app->runningInConsole()) {
-            $this->publishes([$pkg . '/config/handlers.php' => config_path('handlers.php')], 'config');
-            $this->publishes([$pkg . '/config/routes.php' => base_path('routes/handlers.php')], 'routes');
+            $this->publishes([$pkg . '/config/handlers.php' => base_path('config/handlers.php')], 'config');
             $this->publishes([$pkg . '/stubs/handler.stub' => resource_path('stubs/handler.stub')], 'stubs');
         }
     }
