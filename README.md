@@ -59,6 +59,31 @@ $app->register(Laravel\Handlers\ServiceProvider::class);
 
 ## Usage
 
+### Create handler class
+
+Create new handler class by run command
+
+```bash
+$ php artisan make:handler ShowProfile
+```
+
+You can use `--force` option to force create handler class
+
+```bash
+$ php artisan make:handler --force ShowProfile
+```
+
+### Configure
+
+You can change namespace of handler classes by config `namespace` in `config/handlers.php` file.
+
+```php
+    'namespace' => '\\App\\Http\\Api',
+```
+
+### Custom handler stub
+
+
 
 ## Changelog
 
