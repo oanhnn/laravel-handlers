@@ -17,7 +17,9 @@ use Illuminate\Routing\Controller;
  */
 abstract class Handler extends Controller
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    use AuthorizesRequests;
+    use DispatchesJobs;
+    use ValidatesRequests;
 
     /**
      * Execute an action on the handler.
@@ -25,6 +27,7 @@ abstract class Handler extends Controller
      * @param  string $method
      * @param  array $parameters
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \BadMethodCallException
      */
     public function callAction($method, $parameters)
     {

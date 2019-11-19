@@ -1,23 +1,36 @@
 <?php
 
-namespace Laravel\Handlers\Tests\Integration\Commands;
+namespace Tests\Integration\Commands;
 
-use Laravel\Handlers\Tests\TestCase;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Str;
+use Laravel\Handlers\Commands\MakeHandler;
+use Tests\TestCase;
 use RuntimeException;
+use Tests\Concerns\NonPublicAccessible;
 
 /**
  * Class MakeHandlerTest
  *
- * @package     Laravel\Handlers\Tests\Integration\Commands
+ * @package     Tests\Integration\Commands
  * @author      Oanh Nguyen <oanhnn.bk@gmail.com>
  * @license     The MIT License
  */
 class MakeHandlerTest extends TestCase
 {
+    use NonPublicAccessible;
+
     /**
-     * Test with name is specified, handler class will be generated successful
+     * @var \Illuminate\Filesystem\Filesystem
      */
-    public function testNameIsSpecified()
+    protected $files;
+
+    /**
+     * Test command should run success when handler name argument is specified
+     *
+     * @return void
+     */
+    public function testItShouldRunWhenNameIsSpecified()
     {
         $filePath = $this->app->path('Http/Handlers/ShowProfile.php');
 
@@ -32,9 +45,11 @@ class MakeHandlerTest extends TestCase
     }
 
     /**
-     * Test with name isn't specified, exception will be throw
+     * Test command should throw an exception when handler name argument is not specified
+     *
+     * @return void
      */
-    public function testNameIsNotSpecified()
+    public function testItShouldThrowExceptionWhenNameIsNotSpecified()
     {
         $filePath = $this->app->path('Http/Handlers/ShowProfile.php');
 
@@ -45,12 +60,14 @@ class MakeHandlerTest extends TestCase
     }
 
     /**
-     * Test create an existed handler class with force option, handler class file will be re-generated
+     * Test command should override existed handler class when it run with force option
+     *
+     * @return void
      */
-    public function testCreateExistedHandlerClassWithForceOption()
+    public function testItShouldOverrideHandlerClassWhenItRunWithForceOption()
     {
         $filePath = $this->app->path('Http/Handlers/ShowProfile.php');
-        $initialHandlerContent = str_random(16);
+        $initialHandlerContent = Str::random(16);
 
         $this->forceFilePutContents($filePath, $initialHandlerContent);
 
@@ -65,12 +82,14 @@ class MakeHandlerTest extends TestCase
     }
 
     /**
-     * Test create an existed handler class without force option, handler class file wont re-generated
+     * Test command should not override existed handler class when it run without force option
+     *
+     * @return void
      */
-    public function testCreateExistedHandlerClassWithoutForceOption()
+    public function testItShouldNotOverrideHandlerClassWhenItRunWithoutForceOption()
     {
         $filePath = $this->app->path('Http/Handlers/ShowProfile.php');
-        $initialHandlerContent = str_random(16);
+        $initialHandlerContent = Str::random(16);
 
         $this->forceFilePutContents($filePath, $initialHandlerContent);
 
@@ -85,12 +104,48 @@ class MakeHandlerTest extends TestCase
     }
 
     /**
-     * Test create handler class with custom stub file
+     * Test it should use default stub file
+     *
+     * @return void
+     * @throws \ReflectionException
      */
-    public function testUsingCustomStubFile()
+    public function testItShouldUseDefaultStubFile()
+    {
+        $stubPath = dirname(dirname(dirname(__DIR__))) . '/stubs/handler.stub';
+
+        $command = new MakeHandler($this->app->make(Filesystem::class));
+
+        $this->assertEquals($stubPath, $this->invokeNonPublicMethod($command, 'getStub'));
+    }
+
+    /**
+     * Test it should use custom stub file
+     *
+     * @return void
+     * @throws \ReflectionException
+     */
+    public function testItShouldUseCustomStubFile()
     {
         $stubPath = resource_path('stubs/handler.stub');
-        $stubContent = str_random(16);
+        $stubContent = Str::random(16);
+
+        $this->forceFilePutContents($stubPath, $stubContent);
+        $this->assertFileExists($stubPath);
+
+        $command = new MakeHandler($this->app->make(Filesystem::class));
+
+        $this->assertEquals($stubPath, $this->invokeNonPublicMethod($command, 'getStub'));
+    }
+
+    /**
+     * Test it should generate handler classn from custom stub file
+     *
+     * @return void
+     */
+    public function testItShouldGenerateFromCustomStubFile()
+    {
+        $stubPath = resource_path('stubs/handler.stub');
+        $stubContent = Str::random(16);
 
         $this->forceFilePutContents($stubPath, $stubContent);
 
@@ -120,5 +175,34 @@ class MakeHandlerTest extends TestCase
         }
 
         $this->files->put($path, $contents, $lock);
+    }
+
+    /**
+     * Setup the test environment.
+     *
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->files = new Filesystem();
+    }
+
+    /**
+     * Clean up the testing environment before the next test.
+     *
+     * @return void
+     */
+    protected function tearDown(): void
+    {
+        $this->files->delete([
+            base_path('config/handlers.php'),
+            resource_path('stubs/handler.stub'),
+        ]);
+
+        $this->files->cleanDirectory($this->app->path());
+
+        parent::tearDown();
     }
 }

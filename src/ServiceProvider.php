@@ -42,8 +42,14 @@ class ServiceProvider extends IlluminateServiceProvider
 
         // publish vendor resources
         if ($this->app->runningInConsole()) {
-            $this->publishes([$pkg . '/config/handlers.php' => base_path('config/handlers.php')], 'config');
-            $this->publishes([$pkg . '/stubs/handler.stub' => resource_path('stubs/handler.stub')], 'stubs');
+            $this->publishes(
+                [$pkg . '/config/handlers.php' => base_path('config/handlers.php')],
+                'laravel-handlers-config'
+            );
+            $this->publishes(
+                [$pkg . '/stubs/handler.stub' => resource_path('stubs/handler.stub')],
+                'laravel-handlers-stubs'
+            );
         }
     }
 }

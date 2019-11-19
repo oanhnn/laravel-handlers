@@ -14,10 +14,7 @@ Using handler class instead of controller class in Laravel 5.5+
 * php >=7.1.3
 * Laravel 5.5+
 
-## TODO
-
-- [ ] Write test classes
-- [ ] Write documents
+> Laravel 6.0+ requires php 7.2+
 
 ## Installation
 
@@ -32,13 +29,7 @@ $ composer require oanhnn/laravel-handlers
 After that, publish vendor's resources:
 
 ```bash
-$ php artisan vendor:publish --provider="Laravel\\Handlers\\ServiceProvider" --tag=config
-```
-
-If you want customize stub file, please run:
-
-```bash
-$ php artisan vendor:publish --provider="Laravel\\Handlers\\ServiceProvider" --tag=stubs
+$ php artisan vendor:publish --tag=laravel-handlers-config
 ```
 
 ### Lumen
@@ -49,6 +40,7 @@ After that, copy the config file from the vendor directory:
 $ cp vendor/oanhnn/laravel-handlers/config/handlers.php config/handlers.php
 ```
 
+Update base handler class to your class in `config/handlers.php`.   
 Register the config file and the service provider in `bootstrap/app.php`:
 
 ```php
@@ -67,7 +59,7 @@ Create new handler class by run command
 $ php artisan make:handler ShowProfile
 ```
 
-You can use `--force` option to force create handler class
+You can use `--force` option to force create handler class (override existed class)
 
 ```bash
 $ php artisan make:handler --force ShowProfile
@@ -81,9 +73,19 @@ You can change namespace of handler classes by config `namespace` in `config/han
     'namespace' => '\\App\\Http\\Api',
 ```
 
-### Custom handler stub
+You can change base handler class by config `base` in `config/handlers.php` file.
 
+```php
+    'base' => '\App\Http\Controllers\Controller::class',
+```
 
+### Customize handler stub
+
+If you want customize stub file, please run:
+
+```bash
+$ php artisan vendor:publish --tag=laravel-handlers-stubs
+```
 
 ## Changelog
 
@@ -115,4 +117,4 @@ using the issue tracker.
 ## License
 
 This project is released under the MIT License.   
-Copyright © 2018 [Oanh Nguyen](https://oanhnn.github.io/).
+Copyright © [Oanh Nguyen](https://oanhnn.github.io/).

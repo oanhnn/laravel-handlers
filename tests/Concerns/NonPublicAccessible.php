@@ -1,21 +1,21 @@
 <?php
 
-namespace Laravel\Handlers\Tests;
+namespace Tests\Concerns;
 
 use InvalidArgumentException;
 use ReflectionMethod;
 use ReflectionProperty;
 
 /**
- * Trait NonPublicAccessibleTrait
+ * Trait NonPublicAccessible
  *
  * Help access to non-public property and method of an object
  *
- * @package     Laravel\Handlers\Tests
+ * @package     Tests\Concerns
  * @author      Oanh Nguyen <oanhnn.bk@gmail.com>
  * @license     The MIT License
  */
-trait NonPublicAccessibleTrait
+trait NonPublicAccessible
 {
     /**
      * Get a non public property of an object
