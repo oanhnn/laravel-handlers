@@ -25,6 +25,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Nothing
 
 
+
+
+## [1.0.1] - 2019-11-23
+
+### Changed
+- Move `stubs` folder to `resources/stubs`
+
+### Fixed
+- Fixed `extra.laravel.providers` in `composer.json` 
+
+
+
+
 ## [1.0.0] - 2019-11-19
 
 ### Added
@@ -77,4 +90,5 @@ First release
 [0.1.2]:      https://github.com/oanhnn/laravel-handlers/compare/v0.1.1...v0.1.2
 [0.2.0]:      https://github.com/oanhnn/laravel-handlers/compare/v0.1.2...v0.2.0
 [1.0.0]:      https://github.com/oanhnn/laravel-handlers/compare/v0.2.0...v1.0.0
-[Unreleased]: https://github.com/oanhnn/laravel-handlers/compare/v1.0.0...develop
+[1.0.1]:      https://github.com/oanhnn/laravel-handlers/compare/v1.0.0...v1.0.1
+[Unreleased]: https://github.com/oanhnn/laravel-handlers/compare/v1.0.1...develop

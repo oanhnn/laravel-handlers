@@ -58,7 +58,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "Laravel\\Handlers\\HandlersServiceProvider"
+        "Laravel\\Handlers\\ServiceProvider"
       ]
     }
   }

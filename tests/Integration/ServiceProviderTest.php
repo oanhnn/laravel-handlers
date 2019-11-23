@@ -48,7 +48,7 @@ class ServiceProviderTest extends TestCase
      */
     public function testItShouldPublishVendorStubs()
     {
-        $sourceFile = dirname(dirname(__DIR__)) . '/stubs/handler.stub';
+        $sourceFile = dirname(dirname(__DIR__)) . '/resources/stubs/handler.stub';
         $targetFile = resource_path('stubs/handler.stub');
 
         $this->assertFileNotExists($targetFile);

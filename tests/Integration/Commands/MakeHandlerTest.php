@@ -111,7 +111,7 @@ class MakeHandlerTest extends TestCase
      */
     public function testItShouldUseDefaultStubFile()
     {
-        $stubPath = dirname(dirname(dirname(__DIR__))) . '/stubs/handler.stub';
+        $stubPath = dirname(dirname(dirname(__DIR__))) . '/resources/stubs/handler.stub';
 
         $command = new MakeHandler($this->app->make(Filesystem::class));
 

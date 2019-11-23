@@ -47,7 +47,7 @@ class MakeHandler extends GeneratorCommand
             return $customStub;
         }
 
-        return dirname(dirname(__DIR__)) . '/stubs/handler.stub';
+        return dirname(dirname(__DIR__)) . '/resources/stubs/handler.stub';
     }
 
     /**

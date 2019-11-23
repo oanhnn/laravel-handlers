@@ -47,7 +47,7 @@ class ServiceProvider extends IlluminateServiceProvider
                 'laravel-handlers-config'
             );
             $this->publishes(
-                [$pkg . '/stubs/handler.stub' => resource_path('stubs/handler.stub')],
+                [$pkg . '/resources/stubs/handler.stub' => resource_path('stubs/handler.stub')],
                 'laravel-handlers-stubs'
             );
         }
